@@ -1,78 +1,235 @@
-Welcome To My Project
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-    <style>
-        title: Midnight theme
-description: Midnight is a theme for GitHub Pages.
-show_downloads: true
-google_analytics:
-theme: jekyll-theme-midnight
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f4;
-            color: #333;
-        }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 1rem;
-            text-align: center;
-        }
-        nav {
-            background: #555;
-            padding: 0.5rem;
-            text-align: center;
-        }
-        nav a {
-            color: white;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        main {
-            padding: 2rem;
-        }
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sentinel — Dark Cybersecurity</title>
+  <meta name="description" content="Dark, cyber-security themed landing page with terminal, features, and animated background." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#06070a;
+      --panel:rgba(255,255,255,0.03);
+      --accent:#00ff9f; /* neon green */
+      --accent-2:#00d4ff; /* neon cyan */
+      --muted:#9aa4b2;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, 'Roboto Mono', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+    body{
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,212,255,0.03), transparent),
+                  radial-gradient(800px 400px at 90% 90%, rgba(0,255,159,0.02), transparent),
+                  var(--bg);
+      color:#cfeef2;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+
+    /* falling binary canvas sits behind everything */
+    #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+    header{
+      position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:22px 36px;backdrop-filter: blur(6px);
+    }
+    .logo{display:flex;gap:12px;align-items:center;font-family:'Orbitron',sans-serif;color:var(--accent)}
+    .logo .dot{width:16px;height:16px;border-radius:4px;background:linear-gradient(45deg,var(--accent),var(--accent-2));box-shadow:0 0 12px rgba(0,255,159,0.14),0 0 24px rgba(0,212,255,0.04)}
+
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:500;font-size:14px}
+    nav a:hover{color:var(--accent)}
+
+    .container{position:relative;z-index:2;max-width:1100px;margin:40px auto;padding:20px}
+
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start}
+    .hero-card{background:linear-gradient(180deg,var(--glass),var(--glass-2));border:1px solid rgba(255,255,255,0.04);padding:32px;border-radius:12px;box-shadow:0 6px 30px rgba(0,0,0,0.6)}
+
+    .hero h1{font-family:'Orbitron',sans-serif;margin:0 0 8px;font-size:36px;line-height:1;color:#e6fff7;letter-spacing:0.6px}
+    .hero p.lead{color:var(--muted);margin:0 0 22px;font-size:15px}
+    .cta-row{display:flex;gap:12px}
+    .btn{padding:10px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--accent);cursor:pointer;font-weight:700}
+    .btn.secondary{color:var(--muted);border-style:dashed}
+
+    /* terminal mock */
+    .terminal{background:#020306;border-radius:8px;padding:18px;font-family:'Roboto Mono', monospace;color:#b9ffee;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02),0 12px 40px rgba(2,6,12,0.6);border:1px solid rgba(0,255,159,0.03)}
+    .term-header{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+    .term-dots{display:flex;gap:6px}
+    .term-dots span{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,0.06)}
+    .prompt{color:var(--muted);font-size:13px}
+    .cmd{color:var(--accent);font-weight:600}
+
+    /* features */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+    .feature{background:var(--panel);padding:18px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
+    .feature h4{margin:0 0 8px;font-size:15px}
+    .feature p{color:var(--muted);font-size:13px;margin:0}
+
+    footer{margin:48px 0 18px;color:var(--muted);text-align:center}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .features{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:560px){
+      header{padding:14px}
+      .features{grid-template-columns:1fr}
+      .hero h1{font-size:26px}
+    }
+
+    /* little neon hover effect */
+    .glow:hover{text-shadow:0 0 10px rgba(0,255,159,0.12),0 0 30px rgba(0,212,255,0.04)}
+
+    /* subtle scanline */
+    .scanline:before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px);background-size:100% 3px;pointer-events:none}
+
+  </style>
 </head>
 <body>
-
-    <header>
-        <h1>Welcome to My Website</h1>
-    </header>
-
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <header>
+    <div class="logo"><div class="dot"></div><div style="display:flex;flex-direction:column;line-height:1">
+      <span style="font-size:16px">SENTINEL</span>
+      <small style="font-size:10px;color:var(--muted);letter-spacing:0.6px">Cyber Ops • Threat Lab</small>
+    </div></div>
     <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Contact</a>
+      <a href="#features">Features</a>
+      <a href="#terminal">Live Console</a>
+      <a href="#contact">Contact</a>
     </nav>
+  </header>
 
-    <main>
-        <h2>Introduction</h2>
-        <p>This Is a website I built As my Cyber Security Project.</p>
-    </main>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Dark‑mode security landing — detect • defend • respond</h1>
+        <p class="lead">A minimal, neon-accented landing page for security teams, SOC dashboards, or portfolio sites. Showcases a live-looking terminal, threat matrix, and product features.</p>
+        <div class="cta-row">
+          <button class="btn glow">Get started</button>
+          <button class="btn secondary">Documentation</button>
+        </div>
 
-    <footer>
-        <p>&copy; 2025 My Website</p>
-    </footer>
+        <div class="features" id="features" style="margin-top:26px">
+          <div class="feature">
+            <h4>Real‑time telemetry</h4>
+            <p>Stream and visualize network events with low-latency processing.</p>
+          </div>
+          <div class="feature">
+            <h4>Threat intel</h4>
+            <p>Correlate events with threat feeds and automate enrichment.</p>
+          </div>
+          <div class="feature">
+            <h4>Automated response</h4>
+            <p>Trigger runbooks and isolate endpoints automatically.</p>
+          </div>
+        </div>
+      </div>
 
+      <aside class="hero-card terminal" id="terminal">
+        <div class="term-header"><div class="term-dots"><span></span><span></span><span></span></div><div style="margin-left:auto;font-size:12px;color:var(--muted)">SOC Console</div></div>
+        <div class="prompt">$ <span class="cmd">connect sentinel.lab --live</span></div>
+        <pre style="margin:12px 0 0;white-space:pre-wrap;line-height:1.45">
+<span style="color:var(--muted)">[INFO]</span> Establishing secure channel... <span style="color:var(--accent)">✓</span>
+<span style="color:var(--muted)">[STREAM]</span> Events/sec: <strong style="color:var(--accent)">1,482</strong>
+<span style="color:var(--muted)">[ALERT]</span> Suspicious SSH auth attempt from <em style="color:var(--accent-2)">192.88.99.12</em>
+<span style="color:var(--muted)">[IOC]</span> Matched rule: <strong style="color:var(--accent)">C2_BEACON_DETECT</strong>
+<span style="color:var(--muted)">[ACTION]</span> Quarantine host <strong style="color:var(--accent)">host-104</strong>
+
+<span style="color:var(--muted)">$</span> <span style="color:var(--accent)">watch --tail /var/log/secure</span>
+        </pre>
+
+        <div style="margin-top:14px;display:flex;gap:10px;justify-content:space-between;align-items:center">
+          <div style="font-size:12px;color:var(--muted)">Last sync: 0m 18s</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn">Open</button>
+            <button class="btn secondary">Fork</button>
+          </div>
+        </div>
+
+      </aside>
+    </section>
+
+    <section style="margin-top:28px" class="hero-card scanline">
+      <h3 style="margin:0 0 12px;font-family:'Orbitron',sans-serif;color:#e6fff7">Threat Matrix</h3>
+      <p style="margin:0 0 18px;color:var(--muted)">Simulated activity map — hover a cell to see detail (demo-only).</p>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px">
+        <!-- small faux matrix -->
+        <div style="background:linear-gradient(180deg, rgba(0,255,159,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Port 22<br><small style="color:var(--muted)">SSH</small></div>
+        <div style="background:linear-gradient(180deg, rgba(0,212,255,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Port 443<br><small style="color:var(--muted)">HTTPS</small></div>
+        <div style="background:linear-gradient(180deg, rgba(0,255,159,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Anomaly<br><small style="color:var(--muted)">CPU spike</small></div>
+        <div style="background:linear-gradient(180deg, rgba(0,212,255,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Phishing<br><small style="color:var(--muted)">Mail</small></div>
+        <div style="background:linear-gradient(180deg, rgba(0,255,159,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">C2<br><small style="color:var(--muted)">Beacon</small></div>
+        <div style="background:linear-gradient(180deg, rgba(0,212,255,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Malware<br><small style="color:var(--muted)">HASH</small></div>
+      </div>
+    </section>
+
+    <section id="contact" style="margin-top:18px;display:flex;gap:18px;align-items:flex-start">
+      <div class="hero-card" style="flex:1">
+        <h3 style="margin:0 0 8px">Get in touch</h3>
+        <p style="color:var(--muted);margin:0 0 12px">Interested in using this template or collaborating on a security project? Drop a note.</p>
+        <form onsubmit="event.preventDefault();alert('Thanks — demo form submitted')">
+          <label style="display:block;margin-bottom:8px;color:var(--muted);font-size:13px">Email</label>
+          <input type="email" placeholder="you@domain.com" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit">
+          <label style="display:block;margin-top:10px;margin-bottom:8px;color:var(--muted);font-size:13px">Message</label>
+          <textarea placeholder="Tell us about your use case" rows="3" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit"></textarea>
+          <div style="margin-top:10px"><button class="btn">Send</button></div>
+        </form>
+      </div>
+
+      <div style="width:320px" class="hero-card">
+        <h4 style="margin:0 0 8px">Quick Links</h4>
+        <ul style="margin:0;padding:0;list-style:none;color:var(--muted);font-size:14px">
+          <li style="margin-bottom:8px">• Architecture</li>
+          <li style="margin-bottom:8px">• Detections</li>
+          <li style="margin-bottom:8px">• API</li>
+          <li style="margin-bottom:8px">• Support</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>© <span id="year"></span> Sentinel — demo. Built with &lt;3 for security teams.</footer>
+  </main>
+
+  <script>
+    // update year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // simple matrix / binary rain background canvas
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, columns, drops;
+
+    function initCanvas(){
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      const fontSize = 14;
+      columns = Math.floor(width / fontSize);
+      drops = Array(columns).fill(1).map(()=>Math.floor(Math.random()*height));
+      ctx.font = fontSize + 'px monospace';
+    }
+
+    function draw(){
+      ctx.fillStyle = 'rgba(6,7,10,0.12)';
+      ctx.fillRect(0,0,width,height);
+      ctx.fillStyle = 'rgba(0,255,159,0.06)';
+      const chars = '01';
+      for(let i=0;i<columns;i++){
+        const text = chars.charAt(Math.floor(Math.random()*chars.length));
+        const x = i * 14;
+        const y = drops[i] * 14;
+        ctx.fillStyle = 'rgba(0,255,159,' + (Math.random()*0.6 + 0.2) + ')';
+        ctx.fillText(text, x, y);
+        if(y > height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', ()=>{initCanvas();});
+    initCanvas();
+    draw();
+  </script>
 </body>
 </html>
-```
