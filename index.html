@@ -192,7 +192,7 @@
     <footer>© <span id="year"></span> Mr.Amburgy — demo. Built with &lt;3 for security People.</footer>
   </main>
 
-  <script> <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=5841728" style='border:none;'></iframe>
+  <script> 
     // update year
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -223,6 +223,7 @@
         ctx.fillText(text, x, y);
         if(y > height && Math.random() > 0.975) drops[i] = 0;
         drops[i]++;
+        
       }
       requestAnimationFrame(draw);
     }
