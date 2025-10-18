@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Documentation — Cybersecurity</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06070a; --panel:rgba(255,255,255,0.03); --accent:#00ff9f; --accent-2:#00d4ff; --muted:#9aa4b2; --glass: rgba(255,255,255,0.03); --glass-2: rgba(255,255,255,0.02);
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;margin:0;font-family:Inter, 'Roboto Mono', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:#cfeef2;background:var(--bg);scroll-behavior:smooth;}
+  body{-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  canvas#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+  header{position:fixed;top:0;width:100%;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:22px 36px;background:rgba(6,7,10,0.8);backdrop-filter:blur(6px);}
+  .logo{display:flex;gap:12px;align-items:center;font-family:'Orbitron',sans-serif;color:var(--accent);}
+  .logo .dot{width:16px;height:16px;border-radius:4px;background:linear-gradient(45deg,var(--accent),var(--accent-2));box-shadow:0 0 12px rgba(0,255,159,0.14),0 0 24px rgba(0,212,255,0.04);}
+  nav{display:flex;gap:18px;align-items:center;}
+  nav a{color:var(--muted);text-decoration:none;font-weight:500;font-size:14px;}
+  nav a:hover, nav a.active{color:var(--accent);}
+  .container{position:relative;z-index:2;max-width:900px;margin:120px auto 40px;padding:20px;}
+  h1,h2,h3{font-family:'Orbitron',sans-serif;color:#e6fff7;}
+  p{color:var(--muted);}
+  footer{margin:48px 0 18px;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<header>
+  <div class="logo"><div class="dot"></div><div style="display:flex;flex-direction:column;line-height:1"><span style="font-size:16px">Mr.Amburgy</span><small style="font-size:10px;color:var(--muted);letter-spacing:0.6px">Cyber Ops • Threat Lab (DEMO)</small></div></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="documentation.html" class="active">Documentation</a>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>Cybersecurity Documentation</h1>
+  <p>Welcome to the cybersecurity documentation. This page provides guides, tutorials, and references for security enthusiasts, students, and professionals.</p>
+
+  <h2>Getting Started</h2>
+  <p>Learn the fundamentals of cybersecurity: network security, endpoint defense, SOC operations, and threat detection.</p>
+
+  <h2>Threat Detection & Response</h2>
+  <p>Understand how to monitor networks, detect anomalies, and respond to incidents using modern SOC tools.</p>
+
+  <h2>Guides & Tutorials</h2>
+  <p>Step-by-step tutorials on penetration testing, SOC dashboards, and security automation.</p>
+
+  <h2>References</h2>
+  <ul>
+    <li>MITRE ATT&CK Framework</li>
+    <li>OWASP Top Ten</li>
+    <li>TryHackMe Labs</li>
+    <li>Cybersecurity Blogs & Resources</li>
+  </ul>
+
+  <footer>© <span id="year"></span> Mr.Amburgy — demo. Built with &lt;3 for security People.</footer>
+</main>
+
+<script>
+// Update year
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Binary rain background
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let width, height, columns, drops;
+function initCanvas(){
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+  const fontSize = 14;
+  columns = Math.floor(width / fontSize);
+  drops = Array(columns).fill(1).map(()=>Math.floor(Math.random()*height));
+  ctx.font = fontSize + 'px monospace';
+}
+function draw(){
+  ctx.fillStyle = 'rgba(6,7,10,0.12)';
+  ctx.fillRect(0,0,width,height);
+  const chars = '01';
+  for(let i=0;i<columns;i++){
+    const text = chars.charAt(Math.floor(Math.random()*chars.length));
+    const x = i * 14;
+    const y = drops[i] * 14;
+    ctx.fillStyle = 'rgba(0,255,159,' + (Math.random()*0.6 + 0.2) + ')';
+    ctx.fillText(text, x, y);
+    if(y > height && Math.random() > 0.975) drops[i] = 0;
+    drops[i]++;
+  }
+  requestAnimationFrame(draw);
+}
+window.addEventListener('resize',()=>{initCanvas();}); 
+initCanvas(); 
+draw();
+</script>
+</body>
+</html>
