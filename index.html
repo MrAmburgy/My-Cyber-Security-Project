@@ -16,7 +16,6 @@
   --muted:#9aa4b2;
   --glass: rgba(255,255,255,0.03);
   --glass-2: rgba(255,255,255,0.02);
-  --iframe-height:360px;
 }
 *{box-sizing:border-box;}
 html,body{height:100%;margin:0;font-family:Inter, 'Roboto Mono', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
@@ -70,8 +69,9 @@ footer{margin:48px 0 18px;color:var(--muted);text-align:center;}
 @media (max-width:720px){ header{padding:14px} .features{grid-template-columns:1fr} .hero h1{font-size:26px} }
 .glow:hover{text-shadow:0 0 10px rgba(0,255,159,0.12),0 0 30px rgba(0,212,255,0.04);}
 .scanline:before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px);background-size:100% 3px;pointer-events:none;}
+/* badge styling */
 .badge-banner{position:relative;z-index:4;width:100%;display:flex;gap:12px;background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(255,255,255,0.01));padding:12px 18px;box-shadow:0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);border-radius:12px;margin-bottom:20px;flex-wrap:wrap;}
-.badge-frame{flex:1;min-width:200px;max-width:420px;border-radius:12px;overflow:hidden;border:2px solid rgba(0,255,159,0.08);}
+.badge-frame{flex:1;min-width:200px;max-width:420px;border-radius:12px;overflow:hidden;border:2px solid rgba(0,255,159,0.08);height:120px;}
 .badge-frame iframe{width:100%;height:100%;border:0;display:block;}
 </style>
 </head>
@@ -136,7 +136,7 @@ footer{margin:48px 0 18px;color:var(--muted);text-align:center;}
 <span style="color:var(--muted)">[IOC]</span> Matched rule: <strong style="color:var(--accent)">C2_BEACON_DETECT</strong>
 <span style="color:var(--muted)">[ACTION]</span> Quarantine host <strong style="color:var(--accent)">host-104</strong>
 
-<span style="color:var(--muted)">$</span> <span style="color:var(--accent)">watch --tail /var/log/secure</span>
+<span style="color:var(--muted)">$</span> <span class="cmd">watch --tail /var/log/secure</span>
       </pre>
 
       <div style="margin-top:14px;display:flex;gap:10px;justify-content:space-between;align-items:center">
@@ -150,4 +150,56 @@ footer{margin:48px 0 18px;color:var(--muted);text-align:center;}
   </section>
 
   <!-- Threat Matrix -->
-  <section style="margin-top:28px" class="
+  <section style="margin-top:28px" class="hero-card scanline">
+    <h3 style="margin:0 0 12px;font-family:'Orbitron',sans-serif;color:#e6fff7">Threat Matrix</h3>
+    <p style="margin:0 0 18px;color:var(--muted)">Simulated activity map — hover a cell to see detail (demo-only).</p>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px">
+      <div style="background:linear-gradient(180deg, rgba(0,255,159,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Port 22<br><small style="color:var(--muted)">SSH</small></div>
+      <div style="background:linear-gradient(180deg, rgba(0,212,255,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Port 443<br><small style="color:var(--muted)">HTTPS</small></div>
+      <div style="background:linear-gradient(180deg, rgba(0,255,159,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Anomaly<br><small style="color:var(--muted)">CPU spike</small></div>
+      <div style="background:linear-gradient(180deg, rgba(0,212,255,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Phishing<br><small style="color:var(--muted)">Mail</small></div>
+      <div style="background:linear-gradient(180deg, rgba(0,255,159,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">C2<br><small style="color:var(--muted)">Beacon</small></div>
+      <div style="background:linear-gradient(180deg, rgba(0,212,255,0.02), transparent);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Malware<br><small style="color:var(--muted)">HASH</small></div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" style="margin-top:18px;display:flex;gap:18px;align-items:flex-start">
+    <div class="hero-card" style="flex:1">
+      <h3 style="margin:0 0 8px">Get in touch</h3>
+      <p style="color:var(--muted);margin:0 0 12px">Interested in using this template or collaborating on a security project? Drop a note.</p>
+      <form onsubmit="event.preventDefault();alert('Thanks — demo form submitted')">
+        <label style="display:block;margin-bottom:8px;color:var(--muted);font-size:13px">Email</label>
+        <input type="email" placeholder="you@domain.com" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit">
+        <label style="display:block;margin-top:10px;margin-bottom:8px;color:var(--muted);font-size:13px">Message</label>
+        <textarea placeholder="Tell us about your use case" rows="3" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit"></textarea>
+        <div style="margin-top:10px"><button class="btn">Send</button></div>
+      </form>
+    </div>
+
+    <div style="width:320px" class="hero-card">
+      <h4 style="margin:0 0 8px">Quick Links</h4>
+      <ul style="margin:0;padding:0;list-style:none;color:var(--muted);font-size:14px">
+        <li style="margin-bottom:8px">• Architecture</li>
+        <li style="margin-bottom:8px">• Detections</li>
+        <li style="margin-bottom:8px">• API</li>
+        <li style="margin-bottom:8px">• Support</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>© <span id="year"></span> Mr.Amburgy — demo. Built with &lt;3 for security People.</footer>
+</main>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+// matrix background
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let width, height, columns, drops;
+function initCanvas(){ width=canvas.width=window.innerWidth;height=canvas.height=window.innerHeight;const fontSize=14;columns=Math.floor(width/fontSize);drops=Array(columns).fill(1).map(()=>Math.floor(Math.random()*height));ctx.font=fontSize+'px monospace';}
+function draw(){ ctx.fillStyle='rgba(6,7,10,0.12)';ctx.fillRect(0,0,width,height);ctx.fillStyle='rgba(0,255,159,0.06)';const chars='01';for(let i=0;i<columns;i++){const text=chars.charAt(Math.floor(Math.random()*chars.length));const x=i*14;const y=drops[i]*14;ctx.fillStyle='rgba(0,255,159,'+(Math.random()*0.6+0.2)+')';ctx.fillText(text,x,y);if(y>height&&Math.random()>0.975)drops[i]=0;drops[i]++;}requestAnimationFrame(draw);}
+window.addEventListener('resize',()=>{initCanvas();});initCanvas();draw();
+</script>
+</body>
+</html>
