@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mr.Amburgy — Documentation</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06070a;
+  --accent:#00ff9f;
+  --accent-2:#00d4ff;
+  --muted:#9aa4b2;
+  --panel:rgba(255,255,255,0.03);
+  --glass: rgba(255,255,255,0.03);
+  --glass-2: rgba(255,255,255,0.02);
+}
+body{
+  margin:0;
+  font-family:Inter, 'Roboto Mono', monospace;
+  color:#cfeef2;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(0,212,255,0.03), transparent),
+              radial-gradient(800px 400px at 90% 90%, rgba(0,255,159,0.02), transparent),
+              var(--bg);
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:22px 36px;
+  backdrop-filter: blur(6px);
+  background:rgba(0,0,0,0.25);
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+header .logo{font-family:'Orbitron',sans-serif;color:var(--accent);}
+header nav a{margin-left:18px;color:var(--muted);text-decoration:none;font-weight:500;font-size:14px;}
+header nav a:hover{color:var(--accent);}
+main{
+  max-width:1200px;
+  margin:80px auto;
+  padding:20px 60px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:60px;
+}
+
+/* Hero card styling */
+.hero-card{
+  background:linear-gradient(180deg,var(--glass),var(--glass-2));
+  padding:32px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.04);
+  box-shadow:0 6px 30px rgba(0,0,0,0.6);
+  flex:1;
+  max-width:800px;
+  position:relative;
+  z-index:2;
+}
+h1,h2,h3{font-family:'Orbitron',sans-serif;color:#e6fff7;}
+p{color:var(--muted);}
+
+/* Fade-in + breathing neon effect */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes neonPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px var(--accent-2)) drop-shadow(0 0 20px var(--accent));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px var(--accent)) drop-shadow(0 0 40px var(--accent-2));
+  }
+}
+
+/* Side Icons positioned beside the hero-card */
+.side-icon {
+  width: 135px;
+  height: auto;
+  opacity: 0.95;
+  animation: fadeIn 1.2s ease-in-out, neonPulse 3s ease-in-out infinite;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Mr.Amburgy</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="documentation.html">Documentation</a>
+    <a href="https://www.linkedin.com/in/anthony-amburgy-6793a81a2/" target="_blank">LinkedIn</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Left Icon -->
+  <img src="Screenshot%202025-10-18%20110016.png" alt="Left Icon" class="side-icon">
+
+  <!-- Documentation Box -->
+  <div class="hero-card">
+    <h1>Cybersecurity Documentation</h1>
+    <p>Welcome to the Documentation section. Here we cover core concepts, best practices, and example workflows in cybersecurity for SOC teams, analysts, and enthusiasts.</p>
+
+    <h2>1. Threat Intelligence</h2>
+    <p>Threat intel is about collecting, analyzing, and applying knowledge about potential or current attacks that threaten your organization.</p>
+
+    <h2>2. Real-time Telemetry</h2>
+    <p>Telemetry refers to the collection of security events from endpoints, networks, and applications in near real-time to monitor and detect anomalies.</p>
+
+    <h2>3. Automated Response</h2>
+    <p>Automated response involves running pre-defined scripts and playbooks to isolate threats, block malicious activity, and remediate incidents automatically.</p>
+
+    <h2>4. SOC Best Practices</h2>
+    <ul>
+      <li>Maintain a live dashboard to visualize security events.</li>
+      <li>Integrate threat intelligence feeds for context.</li>
+      <li>Enable automated incident response for common threats.</li>
+      <li>Regularly audit and update detection rules.</li>
+    </ul>
+  </div>
+
+  <!-- Right Icon -->
+  <img src="Screenshot%202025-10-18%20110138.png" alt="Right Icon" class="side-icon">
+</main>
+
+</body>
+</html>
