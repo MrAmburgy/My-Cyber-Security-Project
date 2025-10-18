@@ -48,8 +48,6 @@ main{
   justify-content:center;
   gap:60px;
 }
-
-/* Hero card styling */
 .hero-card{
   background:linear-gradient(180deg,var(--glass),var(--glass-2));
   padding:32px;
@@ -61,10 +59,16 @@ main{
   position:relative;
   z-index:2;
 }
-h1,h2,h3{font-family:'Orbitron',sans-serif;color:#e6fff7;}
-p{color:var(--muted);}
-
-/* Fade-in + breathing neon effect */
+h1,h2,h3{font-family:'Orbitron',sans-serif;color:#e6fff7;margin-bottom:12px;}
+p,ul{color:var(--muted);margin-bottom:12px;font-size:15px;}
+ul li{margin-bottom:6px;}
+.side-icon {
+  width: 135px;
+  height: auto;
+  opacity: 0.95;
+  animation: fadeIn 1.2s ease-in-out, neonPulse 3s ease-in-out infinite;
+  flex-shrink: 0;
+}
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
@@ -76,15 +80,6 @@ p{color:var(--muted);}
   50% {
     filter: drop-shadow(0 0 20px var(--accent)) drop-shadow(0 0 40px var(--accent-2));
   }
-}
-
-/* Side Icons positioned beside the hero-card */
-.side-icon {
-  width: 135px;
-  height: auto;
-  opacity: 0.95;
-  animation: fadeIn 1.2s ease-in-out, neonPulse 3s ease-in-out infinite;
-  flex-shrink: 0;
 }
 </style>
 </head>
@@ -124,11 +119,21 @@ p{color:var(--muted);}
       <li>Enable automated incident response for common threats.</li>
       <li>Regularly audit and update detection rules.</li>
     </ul>
+
+    <!-- Example images -->
+    <h2>5. Example Diagrams</h2>
+    <p>Illustrations and diagrams to help visualize SOC workflows and threat patterns:</p>
+    <img src="your-first-image.png" alt="Example Diagram 1" style="width:100%;border-radius:12px;margin-bottom:12px;">
+    <img src="your-second-image.png" alt="Example Diagram 2" style="width:100%;border-radius:12px;margin-bottom:12px;">
   </div>
 
   <!-- Right Icon -->
   <img src="Screenshot%202025-10-18%20110138.png" alt="Right Icon" class="side-icon">
 </main>
+
+</body>
+</html>
+
 
 </body>
 </html>
