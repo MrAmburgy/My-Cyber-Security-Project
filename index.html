@@ -1,237 +1,140 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mr.Amburgy — Cybersecurity</title>
-  <meta name="description" content="Dark, cyber-security themed landing page with terminal, features, and animated background." />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#06070a;
-      --panel:rgba(255,255,255,0.03);
-      --accent:#00ff9f;
-      --accent-2:#00d4ff;
-      --muted:#9aa4b2;
-      --glass: rgba(255,255,255,0.03);
-      --glass-2: rgba(255,255,255,0.02);
-      --iframe-height: 200px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter, 'Roboto Mono', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
-    body{
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,212,255,0.03), transparent),
-                  radial-gradient(800px 400px at 90% 90%, rgba(0,255,159,0.02), transparent),
-                  var(--bg);
-      color:#cfeef2;
-      -webkit-font-smoothing:antialiased;
-      overflow-x:hidden;
-    }
-    #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
-
-    header{
-      position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:22px 36px;backdrop-filter: blur(6px);
-    }
-    .logo{display:flex;gap:12px;align-items:center;font-family:'Orbitron',sans-serif;color:var(--accent)}
-    .logo .dot{width:16px;height:16px;border-radius:4px;background:linear-gradient(45deg,var(--accent),var(--accent-2));box-shadow:0 0 12px rgba(0,255,159,0.14),0 0 24px rgba(0,212,255,0.04)}
-    nav{display:flex;gap:18px;align-items:center}
-    nav a{color:var(--muted);text-decoration:none;font-weight:500;font-size:14px}
-    nav a:hover{color:var(--accent)}
-
-    /* Neon panel for badges */
-    .badge-panel{
-      display:flex;
-      gap:16px;
-      margin:12px auto 40px;
-      align-items:center;
-      justify-content:flex-start;
-      max-width:1100px;
-      background:linear-gradient(180deg,var(--glass),var(--glass-2));
-      border:1px solid rgba(255,255,255,0.04);
-      padding:20px 24px;
-      border-radius:12px;
-      box-shadow:0 6px 30px rgba(0,0,0,0.6);
-      backdrop-filter:blur(6px);
-      z-index:2;
-    }
-    .badge-panel iframe{
-      border:none;
-      border-radius:8px;
-      height: var(--iframe-height);
-      width:320px;
-      box-shadow:0 8px 20px rgba(0,255,159,0.1);
-    }
-    .badge-panel a{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:10px 16px;
-      border:1px solid rgba(0,255,159,0.2);
-      border-radius:8px;
-      background:rgba(0,0,0,0.3);
-      color:var(--accent);
-      font-weight:600;
-      text-decoration:none;
-      transition:0.2s;
-    }
-    .badge-panel a:hover{
-      background:rgba(0,255,159,0.05);
-      box-shadow:0 0 12px rgba(0,255,159,0.4);
-    }
-
-    .container{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:20px}
-    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start}
-    .hero-card{background:linear-gradient(180deg,var(--glass),var(--glass-2));border:1px solid rgba(255,255,255,0.04);padding:32px;border-radius:12px;box-shadow:0 6px 30px rgba(0,0,0,0.6)}
-    .hero h1{font-family:'Orbitron',sans-serif;margin:0 0 8px;font-size:36px;line-height:1;color:#e6fff7;letter-spacing:0.6px}
-    .hero p.lead{color:var(--muted);margin:0 0 22px;font-size:15px}
-    .cta-row{display:flex;gap:12px}
-    .btn{padding:10px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--accent);cursor:pointer;font-weight:700}
-    .btn.secondary{color:var(--muted);border-style:dashed}
-
-    .terminal{background:#020306;border-radius:8px;padding:18px;font-family:'Roboto Mono', monospace;color:#b9ffee;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02),0 12px 40px rgba(2,6,12,0.6);border:1px solid rgba(0,255,159,0.03)}
-    .term-header{display:flex;gap:8px;align-items:center;margin-bottom:12px}
-    .term-dots{display:flex;gap:6px}
-    .term-dots span{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,0.06)}
-    .prompt{color:var(--muted);font-size:13px}
-    .cmd{color:var(--accent);font-weight:600}
-
-    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
-    .feature{background:var(--panel);padding:18px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
-    .feature h4{margin:0 0 8px;font-size:15px}
-    .feature p{color:var(--muted);font-size:13px;margin:0}
-
-    footer{margin:48px 0 18px;color:var(--muted);text-align:center}
-
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr;}
-      .features{grid-template-columns:repeat(2,1fr)}
-      .badge-panel{flex-direction:column;align-items:flex-start;}
-      .badge-panel iframe{width:100%;}
-      .badge-panel a{width:100%;justify-content:center;}
-    }
-    @media (max-width:560px){
-      header{padding:14px}
-      .features{grid-template-columns:1fr}
-      .hero h1{font-size:26px}
-    }
-
-    .glow:hover{text-shadow:0 0 10px rgba(0,255,159,0.12),0 0 30px rgba(0,212,255,0.04)}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mr.Amburgy — Cybersecurity</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06070a;
+    --panel:rgba(255,255,255,0.03);
+    --accent:#00ff9f; 
+    --accent-2:#00d4ff; 
+    --muted:#9aa4b2; 
+    --glass: rgba(255,255,255,0.03);
+    --glass-2: rgba(255,255,255,0.02);
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;margin:0;font-family:Inter, 'Roboto Mono', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:#cfeef2;background:var(--bg);}
+  body{-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  header{position:fixed;top:0;width:100%;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:22px 36px;background:rgba(6,7,10,0.8);backdrop-filter:blur(6px);}
+  .logo{display:flex;gap:12px;align-items:center;font-family:'Orbitron',sans-serif;color:var(--accent);}
+  .logo .dot{width:16px;height:16px;border-radius:4px;background:linear-gradient(45deg,var(--accent),var(--accent-2));box-shadow:0 0 12px rgba(0,255,159,0.14),0 0 24px rgba(0,212,255,0.04);}
+  nav{display:flex;gap:18px;align-items:center;}
+  nav a{color:var(--muted);text-decoration:none;font-weight:500;font-size:14px;position:relative;}
+  nav a.active{color:var(--accent);}
+  nav a.active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:linear-gradient(45deg,var(--accent),var(--accent-2));border-radius:2px;}
+  nav a:hover{color:var(--accent);}
+  .container{position:relative;z-index:2;max-width:1100px;margin:120px auto 40px;padding:20px;}
+  .hero-card{background:linear-gradient(180deg,var(--glass),var(--glass-2));border:1px solid rgba(255,255,255,0.04);padding:32px;border-radius:12px;box-shadow:0 6px 30px rgba(0,0,0,0.6);}
+  .hero h1{font-family:'Orbitron',sans-serif;margin:0 0 8px;font-size:36px;line-height:1;color:#e6fff7;letter-spacing:0.6px;}
+  .hero p.lead{color:var(--muted);margin:0 0 22px;font-size:15px;}
+  .cta-row{display:flex;gap:12px;}
+  .btn{padding:10px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--accent);cursor:pointer;font-weight:700;}
+  .btn.secondary{color:var(--muted);border-style:dashed;}
+  .terminal{background:#020306;border-radius:8px;padding:18px;font-family:'Roboto Mono', monospace;color:#b9ffee;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02),0 12px 40px rgba(2,6,12,0.6);border:1px solid rgba(0,255,159,0.03);}
+  .term-header{display:flex;gap:8px;align-items:center;margin-bottom:12px;}
+  .term-dots{display:flex;gap:6px;}
+  .term-dots span{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,0.06);}
+  .prompt{color:var(--muted);font-size:13px;}
+  .cmd{color:var(--accent);font-weight:600;}
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px;}
+  .feature{background:var(--panel);padding:18px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);}
+  .feature h4{margin:0 0 8px;font-size:15px;}
+  .feature p{color:var(--muted);font-size:13px;margin:0;}
+  footer{margin:48px 0 18px;color:var(--muted);text-align:center;}
+  .badge-panel{display:flex;gap:16px;align-items:center;margin-bottom:20px;}
+  .badge-panel iframe{border:none;width:200px;height:80px;border-radius:8px;box-shadow:0 8px 24px rgba(0,255,159,0.12);}
+  .badge-panel a{color:var(--accent-2);text-decoration:none;font-weight:500;font-size:14px;}
+  @media(max-width:980px){.hero{grid-template-columns:1fr;}.features{grid-template-columns:repeat(2,1fr);}} 
+  @media(max-width:560px){header{padding:14px;}.features{grid-template-columns:1fr;}.hero h1{font-size:26px;}}
+</style>
 </head>
 <body>
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
 
-  <header>
-    <div class="logo">
-      <div class="dot"></div>
-      <div style="display:flex;flex-direction:column;line-height:1">
-        <span style="font-size:16px">Mr.Amburgy</span>
-        <small style="font-size:10px;color:var(--muted);letter-spacing:0.6px">Cyber Ops • Threat Lab (DEMO)</small>
+<header>
+  <div class="logo">
+    <div class="dot"></div>
+    <div style="display:flex;flex-direction:column;line-height:1">
+      <span style="font-size:16px">Mr.Amburgy</span>
+      <small style="font-size:10px;color:var(--muted);letter-spacing:0.6px">Cyber Ops • Threat Lab (DEMO)</small>
+    </div>
+  </div>
+  <nav>
+    <a href="#hero" class="active">Home</a>
+    <a href="#features">Features</a>
+    <a href="#terminal">Live Console</a>
+    <a href="#documentation">Documentation</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main class="container">
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="badge-panel">
+      <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=5841728" title="TryHackMe Badge"></iframe>
+      <a href="https://www.linkedin.com/in/anthony-amburgy-6793a81a2/" target="_blank">LinkedIn Profile</a>
+    </div>
+    <div class="hero-card">
+      <h1>Mr.Amburgy Security — detect • defend • respond (DEMO)</h1>
+      <p class="lead">A minimal, neon-accented landing page for security teams, SOC dashboards, or portfolio sites.</p>
+      <div class="cta-row">
+        <button class="btn glow">Get started</button>
+        <button class="btn secondary">Documentation</button>
+      </div>
+      <div class="features" id="features" style="margin-top:26px">
+        <div class="feature"><h4>Real‑time telemetry</h4><p>Stream and visualize network events with low-latency processing.</p></div>
+        <div class="feature"><h4>Threat intel</h4><p>Correlate events with threat feeds and automate enrichment.</p></div>
+        <div class="feature"><h4>Automated response</h4><p>Trigger runbooks and isolate endpoints automatically.</p></div>
       </div>
     </div>
-    <nav>
-      <a href="#features">Features</a>
-      <a href="#terminal">Live Console</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
 
-  <!-- Neon Badge Panel -->
-  <div class="badge-panel">
-    <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=5841728" title="TryHackMe Badge"></iframe>
-    <a href="https://www.linkedin.com/in/anthony-amburgy-6793a81a2/" target="_blank">LinkedIn Profile</a>
-  </div>
-
-  <main class="container">
-    <section class="hero">
-      <div class="hero-card">
-        <h1>Mr.Amburgy Security — detect • defend • respond(DEMO)</h1>
-        <p class="lead">A minimal, neon-accented landing page for security teams, SOC dashboards, or portfolio sites. Showcases a live-looking terminal, threat matrix, and product features.</p>
-        <div class="cta-row">
-          <button class="btn glow">Get started</button>
-          <button class="btn secondary">Documentation</button>
-        </div>
-        <div class="features" id="features" style="margin-top:26px">
-          <div class="feature">
-            <h4>Real‑time telemetry</h4>
-            <p>Stream and visualize network events with low-latency processing.</p>
-          </div>
-          <div class="feature">
-            <h4>Threat intel</h4>
-            <p>Correlate events with threat feeds and automate enrichment.</p>
-          </div>
-          <div class="feature">
-            <h4>Automated response</h4>
-            <p>Trigger runbooks and isolate endpoints automatically.</p>
-          </div>
-        </div>
-      </div>
-
-      <aside class="hero-card terminal" id="terminal">
-        <div class="term-header">
-          <div class="term-dots"><span></span><span></span><span></span></div>
-          <div style="margin-left:auto;font-size:12px;color:var(--muted)">SOC Console</div>
-        </div>
-        <div class="prompt">$ <span class="cmd">connect sentinel.lab --live</span></div>
-        <pre style="margin:12px 0 0;white-space:pre-wrap;line-height:1.45">
+    <aside class="hero-card terminal" id="terminal">
+      <div class="term-header"><div class="term-dots"><span></span><span></span><span></span></div><div style="margin-left:auto;font-size:12px;color:var(--muted)">SOC Console</div></div>
+      <div class="prompt">$ <span class="cmd">connect sentinel.lab --live</span></div>
+      <pre style="margin:12px 0 0;white-space:pre-wrap;line-height:1.45">
 [INFO] Establishing secure channel... ✓
 [STREAM] Events/sec: 1,482
 [ALERT] Suspicious SSH auth attempt from 192.88.99.12
 [IOC] Matched rule: C2_BEACON_DETECT
 [ACTION] Quarantine host host-104
+
 $ watch --tail /var/log/secure
-        </pre>
-        <div style="margin-top:14px;display:flex;gap:10px;justify-content:space-between;align-items:center">
-          <div style="font-size:12px;color:var(--muted)">Last sync: 0m 18s</div>
-          <div style="display:flex;gap:8px">
-            <button class="btn">Open</button>
-            <button class="btn secondary">Fork</button>
-          </div>
+      </pre>
+      <div style="margin-top:14px;display:flex;gap:10px;justify-content:space-between;align-items:center">
+        <div style="font-size:12px;color:var(--muted)">Last sync: 0m 18s</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn">Open</button>
+          <button class="btn secondary">Fork</button>
         </div>
-      </aside>
-    </section>
-  </main>
+      </div>
+    </aside>
+  </section>
 
-  <footer>© <span id="year"></span> Mr.Amburgy — demo. Built with &lt;3 for security People.</footer>
+  <!-- Documentation Section -->
+  <section class="hero-card" id="documentation" style="margin-top:40px">
+    <h1>Documentation</h1>
+    <p>Welcome to the documentation section. Here you can provide guides, API references, tutorials, and instructions for your cybersecurity demos and portfolio.</p>
+    <h2>Getting Started</h2>
+    <p>Explain how to set up your demo environment, SOC dashboards, or security tools.</p>
+    <h2>API Reference</h2>
+    <p>List the available endpoints or mock commands used in your demo.</p>
+    <h2>Guides & Tutorials</h2>
+    <p>Provide step-by-step instructions or examples for users or clients.</p>
+  </section>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let width, height, columns, drops;
+  <!-- Contact Section -->
+  <section id="contact" class="hero-card" style="margin-top:40px">
+    <h3>Get in touch</h3>
+    <form onsubmit="event.preventDefault();alert('Thanks — demo form submitted')">
+      <label>Email</label>
+      <input type="email" placeholder="you@domain.com" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit">
+      <label style="margin-top:10px">Message</label
 
-    function initCanvas(){
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      const fontSize = 14;
-      columns = Math.floor(width / fontSize);
-      drops = Array(columns).fill(1).map(()=>Math.floor(Math.random()*height));
-      ctx.font = fontSize + 'px monospace';
-    }
-
-    function draw(){
-      ctx.fillStyle = 'rgba(6,7,10,0.12)';
-      ctx.fillRect(0,0,width,height);
-      const chars = '01';
-      for(let i=0;i<columns;i++){
-        const text = chars.charAt(Math.floor(Math.random()*chars.length));
-        const x = i * 14;
-        const y = drops[i] * 14;
-        ctx.fillStyle = 'rgba(0,255,159,' + (Math.random()*0.6 + 0.2) + ')';
-        ctx.fillText(text, x, y);
-        if(y > height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-      }
-      requestAnimationFrame(draw);
-    }
-
-    window.addEventListener('resize', ()=>{initCanvas();});
-    initCanvas();
-    draw();
-  </script>
-</body>
-</html>
 
 
 
